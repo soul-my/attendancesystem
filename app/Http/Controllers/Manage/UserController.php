@@ -64,10 +64,10 @@ class UserController extends Controller
         }
 
         $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
         $user->password = Hash::make($request->password);
-        $user->access_level = $request->acc_type;
+        $user->access_level = $request->input('acc_type');
         $user->save();
 
         return view('admin.manage.users.index',[

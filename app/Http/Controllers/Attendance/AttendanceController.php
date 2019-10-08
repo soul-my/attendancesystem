@@ -71,7 +71,7 @@ class AttendanceController extends Controller
     {
         //
         $parent_id = StudentParent::where('ic_number','=',$request->ic_number)->first()->parent_id;
-        $event_id = $request->event_id;
+        $event_id = $request->input('event_id');
 
         $attendance = new Attendance;
         $attendance->event_id = $event_id;
@@ -129,9 +129,11 @@ class AttendanceController extends Controller
     public function delete(Request $request)
     {
         //
-        $record = Attendance::find($request->attendance_id);
+        $record = Attendance::find($request->input('attendance_id'));
 
-        if ($record->delete()) {
+        $flag = $record->delete();
+
+        if ($flag) {
             return response()->json(['status'=>'success','message'=>'Maklumat telah dihapuskan']);
         }else{
             return response()->json(['status'=>'failed','message'=>'Maklumat tidak dapat dihapuskan']);
